@@ -1,0 +1,59 @@
+import random
+import replit
+import time
+
+class Racer:
+  track_length=30
+
+  def __init__(self,b):
+    self.racer_num=b
+    self.distance=0
+
+  def race(self):
+    self.distance=self.distance+random.randint(1,3)
+    if self.distance>Racer.track_length:
+      self.distance=Racer.track_length
+  def display(self):
+    if self.distance==Racer.track_length:
+      print(29*" "+str(self.racer_num))
+    else:
+      for i in range(self.distance-1):
+        print(" ",end="")
+      print(self.racer_num,end="")
+      if self.distance!=Racer.track_length:
+        print((29-self.distance)*" "+":")
+      
+  @staticmethod
+  def winner(racer_list):
+    winnerlist=[]
+    for i in range(len(racer_list)):
+      if racer_list[i].distance==30:
+        winnerlist.append(racer_list[i])
+    if len(winnerlist)>0:
+      print("Winner(s):",end="")
+      for i in range(len(winnerlist)):
+        print(" Racer",winnerlist[i].racer_num,end="")
+      return True
+    else:
+      return False
+
+  @staticmethod
+  def main():
+    racer1=Racer(1)
+    racer2=Racer(2)
+    racer3=Racer(3)
+    racer4=Racer(4)
+    racer_list=[racer1,racer2,racer3,racer4]
+    for i in range(len(racer_list)):
+      racer_list[i].display()
+    time.sleep(3)
+    while True:
+      replit.clear()
+      for i in range(len(racer_list)):
+        racer_list[i].race()
+      for i in range(len(racer_list)):
+        racer_list[i].display()
+      time.sleep(0.5)
+      if Racer.winner(racer_list)==True:
+        break
+Racer.main()
